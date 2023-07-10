@@ -1,4 +1,8 @@
-export const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+// this is the scond adress, which is funde me. first adress is help config contract
+export const contractAnvilAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+export const contractGanacheAddress =
+  "0x4d62cc77686894b55d4194e9d7b31187bb0f8df6"
+
 export const abi = [
   {
     inputs: [

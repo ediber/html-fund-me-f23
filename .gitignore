@@ -2,3 +2,6 @@
 .encryptedKey.json
 node_modules
 dist
+package.json
+.vscode/extensions.json
+package-lock.json

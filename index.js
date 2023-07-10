@@ -1,5 +1,9 @@
 import { ethers } from "./ethers-5.6.esm.min.js"
-import { abi, contractAddress } from "./constants.js"
+import {
+  abi,
+  contractGanacheAddress,
+  contractAnvilAddress,
+} from "./constants.js"
 
 const connectButton = document.getElementById("connectButton")
 const withdrawButton = document.getElementById("withdrawButton")
@@ -13,7 +17,7 @@ balanceButton.onclick = getBalance
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
     try {
-      await ethereum.request({ method: "eth_requestAccounts" })
+      ethereum.request({ method: "eth_requestAccounts" })
     } catch (error) {
       console.log(error)
     }
@@ -29,9 +33,9 @@ async function withdraw() {
   console.log(`Withdrawing...`)
   if (typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    await provider.send('eth_requestAccounts', [])
+    await provider.send("eth_requestAccounts", [])
     const signer = provider.getSigner()
-    const contract = new ethers.Contract(contractAddress, abi, signer)
+    const contract = new ethers.Contract(contractAnvilAddress, abi, signer)
     try {
       const transactionResponse = await contract.withdraw()
       await listenForTransactionMine(transactionResponse, provider)
@@ -50,7 +54,7 @@ async function fund() {
   if (typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
-    const contract = new ethers.Contract(contractAddress, abi, signer)
+    const contract = new ethers.Contract(contractAnvilAddress, abi, signer)
     try {
       const transactionResponse = await contract.fund({
         value: ethers.utils.parseEther(ethAmount),
@@ -68,7 +72,7 @@ async function getBalance() {
   if (typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     try {
-      const balance = await provider.getBalance(contractAddress)
+      const balance = await provider.getBalance(contractAnvilAddress)
       console.log(ethers.utils.formatEther(balance))
     } catch (error) {
       console.log(error)
